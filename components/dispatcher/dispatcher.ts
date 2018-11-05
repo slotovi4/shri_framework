@@ -49,6 +49,7 @@ class Dispatcher {
       }
 
       if (this.store) {
+        this.store.update = false; //set default
         if (action === "setPageTitle") {
           if (this.store.title != title) this.store.setPageTitle(el, title);
         }

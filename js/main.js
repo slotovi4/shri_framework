@@ -27,11 +27,13 @@ class Store {
     } else this.update = false;
   }
   setActiveItems(el, actClass) {
+    let oldActive = this.activeEl;
     let arr = [];
     el.forEach(item => {
       if (item.classList.contains(actClass)) arr.push(item);
     });
     arr.length < 1 ? (this.activeEl = false) : (this.activeEl = arr);
+    oldActive != this.activeEl ? (this.update = true) : (this.update = false);
   }
 }
 function getData(patch, file) {
@@ -55,7 +57,7 @@ function getData(patch, file) {
     return jsondata;
   }
 }
-
+//
 class Dispatcher {
   //Вызываю коллбэк из Store
   dispatch(arr) {
@@ -86,6 +88,7 @@ class Dispatcher {
         this.store.setDefaultPage(pageName, dataName, dataPath);
       }
       if (this.store) {
+        this.store.update = false; //set default
         if (action === "setPageTitle") {
           if (this.store.title != title) this.store.setPageTitle(el, title);
         }

@@ -46,6 +46,7 @@ class Store {
   }
 
   setActiveItems(el: Array<HTMLElement>, actClass: string): void {
+    let oldActive = this.activeEl;
     let arr: Array<HTMLElement> = [];
 
     el.forEach(item => {
@@ -53,6 +54,7 @@ class Store {
     });
 
     arr.length < 1 ? (this.activeEl = false) : (this.activeEl = arr);
+    oldActive != this.activeEl ? (this.update = true) : (this.update = false);
   }
 }
 
