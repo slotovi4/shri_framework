@@ -1,0 +1,13 @@
+{
+  "title": "video",
+  "events": [
+    {
+      "name": "vid1",
+      "data": "voi"
+    },
+    {
+      "name": "vid2",
+      "data": "coi0"
+    }
+  ]
+}

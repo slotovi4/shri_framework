@@ -1,0 +1,13 @@
+{
+  "title": "event",
+  "events": [
+    {
+      "name": "first",
+      "data": 1
+    },
+    {
+      "name": "second",
+      "data": 2
+    }
+  ]
+}
