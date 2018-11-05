@@ -9,13 +9,95 @@
 </head>
 
 <body>
-    <h1 class="page"></h1>
+    <ul>
+        <li>
+            <a class="st-new-page" data-dat='event.json' href="#">event</a>
+        </li>
+        <li>
+            <a class="st-new-page" data-dat='video.json' href="#">vid</a>
+        </li>
+    </ul>
+    <h1 class="st-page-title"></h1>
+    <div class="container">
+
+    </div>
+
+    <template>
+        <div>
+            <div class="name"></div>
+            <div class="data"></div>
+        </div>
+    </template>
     <script src="js/main.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            let st = new Store();
-            st.setDefaultPage('event', 'event.json', '/data/');
-            console.log(st.getCurrentPage());
+            let dataDispatcher = new Dispatcher();
+            /*actions*/
+
+            //init page
+            dataDispatcher.dispatch([{
+                actionType: "setDefaultPage",
+                data: {
+                    pageName: "event",
+                    dataName: "event.json",
+                    dataPath: "/data/",
+                    dataFunc: templateEngine
+                }
+            }, {
+                actionType: "setPageTitle",
+                data: {
+                    el: ".st-page-title",
+                    title: "event title"
+                }
+            }
+            ]);
+
+            //click
+            let title = document.querySelectorAll('.st-new-page');
+            title.forEach(item => {
+                item.addEventListener('click', function () {
+                    dataDispatcher.dispatch([{
+                        actionType: "setNewPage",
+                        data: {
+                            pageName: item.textContent,
+                            dataName: item.getAttribute('data-dat'),
+                            dataPath: "/data/",
+                            dataFunc: templateEngine
+                        }
+                    }, {
+                        actionType: "setPageTitle",
+                        data: {
+                            el: ".st-page-title",
+                            title: item.textContent
+                        }
+                    }]);
+                });
+            });
+
+            function templateEngine(data) {
+                let container = document.querySelector('.container');
+                container.innerHTML = '';
+                data.events.forEach(item => {
+                    let dat = item.data;
+                    let name = item.name;
+
+                    let temp = document.querySelector('template');
+                    let cont = temp.content;
+                    let tempD = cont.querySelector('.data');
+                    let tempN = cont.querySelector('.name');
+
+                    tempD.textContent = dat;
+                    tempN.textContent = name;
+
+                    container.appendChild(cont.cloneNode(true));
+                });
+            }
+
+            //получить данные из store и перерисовывается
+            dataDispatcher.register();
+
+            //st.setDefaultPage('event', 'event.json', '/data/');
+            console.log(dataDispatcher.store);
         });
     </script>
 </body>

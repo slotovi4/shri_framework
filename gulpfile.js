@@ -5,6 +5,7 @@ const source = "./components/dispatcher/",
   dist = "./",
   path = {
     src: {
+      allts: "./components/**/*.ts",
       ts: source + "**/*.ts"
     },
     dev: {
@@ -28,5 +29,5 @@ gulp.task("ts", function() {
 });
 
 gulp.task("watch", ["ts"], function() {
-  gulp.watch([path.src.ts], ["ts"]);
+  gulp.watch([path.src.allts], ["ts"]);
 });

@@ -1,65 +1,77 @@
 import Store from "../stores/store";
-//const Store = require("../stores/store.ts").Store;
-//const store = new Store();
-
-//default / init page
-/* const defaultPage = {
-  page: "event",
-  file: "event.json"
-};
-
-const defaultStore = new Store(defaultPage.page, defaultPage.file, true);
-const defaultStorePage = defaultStore.getCurrentPage(); */
 
 interface disData {
   actionType: string;
   data: object;
-  page: string;
-  file: string;
+  el: string;
+  title: string;
+  pageName: string;
+  dataName: string;
+  dataPath: string;
+  dataFunc: Function | false;
 }
 
 //
 class Dispatcher {
-  dispatch(obj: object): void {
-    let objts = obj as disData;
-    let objdata = objts.data as disData;
-    let action: string = objts.actionType;
-    let page: string = objdata.page;
-    let file: string = objdata.file;
+  private store: any;
 
-    if (action === "new-page") {
-      //if (defaultStorePage != page) {
-      //newStore.
-      //newPage(page, file);
-      //}
-      //const store = new Store('video');
+  //Вызываю коллбэк из Store
+  dispatch(arr: Array<Object>): void {
+    arr.forEach(obj => {
+      let objts = obj as disData,
+        objd = objts.data as disData,
+        action = objts.actionType,
+        el = objd.el,
+        title = objd.title,
+        pageName = objd.pageName,
+        dataName = objd.dataName,
+        dataPath = objd.dataPath,
+        dataFunc = objd.dataFunc;
+
+      if (dataFunc === undefined) dataFunc = false;
+
+      if (action === "setDefaultPage") {
+        this.store = new Store(pageName, {}, title, el, true, dataFunc);
+        this.store.setDefaultPage(pageName, dataName, dataPath);
+      }
+
+      if (this.store) {
+        if (action === "setPageTitle") {
+          if (this.store.title != title) this.store.setPageTitle(el, title);
+        }
+
+        if (action === "setNewPage") {
+          if (this.store.page != pageName) {
+            this.store.setDefaultPage(pageName, dataName, dataPath);
+            this.store.dataFunc = dataFunc;
+          }
+        }
+
+        this.register();
+      }
+    });
+  }
+
+  //Беру данные из store и обновляю
+  register(): void {
+    if (this.store && this.store.update) {
+      //обновление title
+      changePageTitle(this.store.titleEl, this.store.title);
+
+      //запуск кастомной функции для Store date
+      if (this.store.dataFunc)
+        changePageContent(this.store.data, this.store.dataFunc);
     }
   }
 }
 
-let dataDispatcher = new Dispatcher();
+function changePageTitle(el: string, title: string): void {
+  let titles = document.querySelectorAll(el);
+  titles.forEach(item => {
+    item.textContent = title;
+  });
+}
 
-//action
-dataDispatcher.dispatch({
-  actionType: "new-page",
-  data: {
-    page: "video",
-    file: "video.json"
-  }
-});
-
-/* function getJson() {
-  let newStore = Store;
-} */
-
-/* function newPage(page: string, file: string) {
-  let newStore = Store;
-} */
-
-//обращаюсь к store
-/* dataDispatcher.register(function(payload) {
-  if (payload.actionType === "new-page") {
-    store.page = payload.data;
-  }
-});
- */
+function changePageContent(data: any, fun: Function) {
+  fun(data);
+}

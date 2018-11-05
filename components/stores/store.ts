@@ -1,17 +1,27 @@
 //получаю состояние от Dispatcher
 class Store {
   private page: string;
-  private data: string;
+  private data: object;
+  private title: string;
+  private titleEl: string;
   private update: boolean;
+  private dataFunc: Function | false;
 
-  constructor(page: string, data: string, update: boolean) {
+  /* store data */
+  constructor(
+    page: string,
+    data: object,
+    title: string,
+    titleEl: string,
+    update: boolean,
+    dataFunc: Function | false
+  ) {
     this.page = page;
     this.data = data;
+    this.title = title;
+    this.titleEl = titleEl;
     this.update = update;
-
-    //возвращаю состояние
-    if (this.update) {
-    }
+    this.dataFunc = dataFunc;
   }
 
   /*metods*/
@@ -20,50 +30,44 @@ class Store {
     return this.page;
   }
 
-  //setDefaultPage
-  setDefaultPage(page: string, data: string, path: string) {
-    this.page = page;
-    this.data = data;
-    this.update = true;
-    //get data
-    let json = getData(path, data);
-    //draw
-    templateEngine(json);
+  setDefaultPage(page: string, dataName: string, path: string): void {
+    let json = getData(path, dataName); //get data
+    if (page != "" && json) {
+      this.page = page;
+      this.data = json;
+      this.update = true;
+    } else this.update = false;
   }
 
-  //new page
-  newPage(page: string, data: string) {
-    this.page = page;
-    this.data = data;
-    this.update = true;
+  setPageTitle(titleEl: string, title: string): void {
+    if (titleEl != "" && title != "") {
+      this.titleEl = titleEl;
+      this.title = title;
+      this.update = true;
+    } else this.update = false;
   }
 }
 
-function getData(patch: string, file: string) {
+function getData(patch: string, file: string): object {
   var xhr = new XMLHttpRequest();
   let filePath = patch + file;
   xhr.open("GET", filePath, false);
   xhr.send();
   if (xhr.status != 200) {
     // обработать ошибку
-    throw "Error: " + xhr.status + ": " + xhr.statusText;
+    throw "getData Error " +
+      xhr.status +
+      ": " +
+      xhr.statusText +
+      ", " +
+      filePath +
+      " file not found";
   } else {
     // вывести результат
     let data = xhr.responseText;
     let jsondata: object = JSON.parse(data);
     return jsondata;
   }
-}
-
-interface tempData {
-  title: string;
-}
-
-function templateEngine(data: object) {
-  let datats = data as tempData;
-  let title = datats.title;
-  let page = <HTMLElement>document.querySelector(".page");
-  page.textContent = title;
 }
 
 export default Store;
