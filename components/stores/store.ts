@@ -6,6 +6,7 @@ class Store {
   private titleEl: string;
   private update: boolean;
   private dataFunc: Function | false;
+  private activeEl: Array<HTMLElement> | false;
 
   /* store data */
   constructor(
@@ -14,7 +15,8 @@ class Store {
     title: string,
     titleEl: string,
     update: boolean,
-    dataFunc: Function | false
+    dataFunc: Function | false,
+    activeEl: Array<HTMLElement> | false
   ) {
     this.page = page;
     this.data = data;
@@ -22,14 +24,10 @@ class Store {
     this.titleEl = titleEl;
     this.update = update;
     this.dataFunc = dataFunc;
+    this.activeEl = activeEl;
   }
 
   /*metods*/
-
-  getCurrentPage(): string {
-    return this.page;
-  }
-
   setDefaultPage(page: string, dataName: string, path: string): void {
     let json = getData(path, dataName); //get data
     if (page != "" && json) {
@@ -46,6 +44,16 @@ class Store {
       this.update = true;
     } else this.update = false;
   }
+
+  setActiveItems(el: Array<HTMLElement>, actClass: string): void {
+    let arr: Array<HTMLElement> = [];
+
+    el.forEach(item => {
+      if (item.classList.contains(actClass)) arr.push(item);
+    });
+
+    arr.length < 1 ? (this.activeEl = false) : (this.activeEl = arr);
+  }
 }
 
 function getData(patch: string, file: string): object {
@@ -54,7 +62,7 @@ function getData(patch: string, file: string): object {
   xhr.open("GET", filePath, false);
   xhr.send();
   if (xhr.status != 200) {
-    // обработать ошибку
+    // ERROR
     throw "getData Error " +
       xhr.status +
       ": " +
@@ -63,7 +71,7 @@ function getData(patch: string, file: string): object {
       filePath +
       " file not found";
   } else {
-    // вывести результат
+    // Result
     let data = xhr.responseText;
     let jsondata: object = JSON.parse(data);
     return jsondata;

@@ -18,6 +18,12 @@
         </li>
     </ul>
     <h1 class="st-page-title"></h1>
+    <div>
+        <button id="1" class="st-button">nonact</button>
+        <button id="3" class="st-button">nonact</button>
+        <button id="2" class="st-button">nonact</button>
+        <button id="4" class="st-button">nonact</button>
+    </div>
     <div class="container">
 
     </div>
@@ -93,11 +99,28 @@
                 });
             }
 
+            let butt = document.querySelectorAll('.st-button');
+            butt.forEach(item => {
+                item.addEventListener('click', function () {
+                    if (item.classList.contains('butt-act'))
+                        item.classList.remove('butt-act');
+                    else item.classList.add('butt-act');
+
+                    dataDispatcher.dispatch([{
+                        actionType: "itemStatus",
+                        data: {
+                            dataActive: butt,
+                            activeClass: 'butt-act',
+                        }
+                    }]);
+                });
+            });
+
             //получить данные из store и перерисовывается
             dataDispatcher.register();
 
-            //st.setDefaultPage('event', 'event.json', '/data/');
-            console.log(dataDispatcher.store);
+            console.log(dataDispatcher.getCurrentPage());
+            console.log(dataDispatcher.getActiveItems());
         });
     </script>
 </body>

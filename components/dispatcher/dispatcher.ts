@@ -9,6 +9,8 @@ interface disData {
   dataName: string;
   dataPath: string;
   dataFunc: Function | false;
+  dataActive: Array<HTMLElement> | false;
+  activeClass: string;
 }
 
 //
@@ -26,12 +28,23 @@ class Dispatcher {
         pageName = objd.pageName,
         dataName = objd.dataName,
         dataPath = objd.dataPath,
-        dataFunc = objd.dataFunc;
+        dataFunc = objd.dataFunc,
+        dataActive = objd.dataActive,
+        activeClass = objd.activeClass;
 
-      if (dataFunc === undefined) dataFunc = false;
+      if (dataFunc === undefined) dataFunc = false; //set default
+      if (dataActive === undefined) dataActive = false; //set default
 
       if (action === "setDefaultPage") {
-        this.store = new Store(pageName, {}, title, el, true, dataFunc);
+        this.store = new Store(
+          pageName,
+          {},
+          title,
+          el,
+          true,
+          dataFunc,
+          dataActive
+        );
         this.store.setDefaultPage(pageName, dataName, dataPath);
       }
 
@@ -45,6 +58,10 @@ class Dispatcher {
             this.store.setDefaultPage(pageName, dataName, dataPath);
             this.store.dataFunc = dataFunc;
           }
+        }
+
+        if (action === "itemStatus") {
+          this.store.setActiveItems(dataActive, activeClass);
         }
 
         this.register();
@@ -62,6 +79,15 @@ class Dispatcher {
       if (this.store.dataFunc)
         changePageContent(this.store.data, this.store.dataFunc);
     }
+  }
+
+  //Metods
+  getCurrentPage(): string {
+    return this.store.page;
+  }
+
+  getActiveItems(): false | Array<HTMLElement> {
+    return this.store.activeEl;
   }
 }
 
