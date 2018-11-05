@@ -56,7 +56,6 @@ function getData(patch, file) {
   }
 }
 
-//
 class Dispatcher {
   //Вызываю коллбэк из Store
   dispatch(arr) {
