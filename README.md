@@ -3,7 +3,7 @@
 <ins>Описание:</ins><br>
 TS Фреймфорка находиться в папке components.<br>
 Файл для подключения main.min.js, находиться в папке js.<br>
-Подключил фреймворк на проект: https://slotovi4.github.io/shri_1/dist/<br>
+Подключил фреймворк на проект(GH-PAGES): https://slotovi4.github.io/shri_1/dist/<br>
 С помощью фреймворка реализовал смену страниц по клику меню(смена заголовка страницы и контента в низу страницы index.html) и<br>
 отслеживание открытого видео(в файле openVideo.ts, путь -> js/video-monitoring-scripts/).<br>
 Репозиторий проекта с подключенным фреймом: https://github.com/slotovi4/shri_1/tree/gh-pages<br>
