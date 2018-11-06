@@ -9,7 +9,7 @@ Dispatcher по умолчанию: <i>dataDispatcher</i><br>
 Создание Action: <i>dataDispatcher.dispatch([{Action}]);</i><br>
 Несколько Action: <i>dataDispatcher.dispatch([{Action},{Action},...]);</i><br>
 <br>
-<ins>Структура Action:</ins><br>
+<big><ins>Структура Action:</ins></big><br>
 
 <pre>
 {
