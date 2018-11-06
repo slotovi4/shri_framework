@@ -1,4 +1,9 @@
 //получаю состояние от Dispatcher
+interface savData {
+  dataName: string;
+  data: object;
+}
+
 class Store {
   private page: string;
   private data: object;
@@ -7,6 +12,7 @@ class Store {
   private update: boolean;
   private dataFunc: Function | false;
   private activeEl: Array<HTMLElement> | false;
+  private savedData: Array<object>;
 
   /* store data */
   constructor(
@@ -16,7 +22,8 @@ class Store {
     titleEl: string,
     update: boolean,
     dataFunc: Function | false,
-    activeEl: Array<HTMLElement> | false
+    activeEl: Array<HTMLElement> | false,
+    savedData: Array<object>
   ) {
     this.page = page;
     this.data = data;
@@ -25,11 +32,32 @@ class Store {
     this.update = update;
     this.dataFunc = dataFunc;
     this.activeEl = activeEl;
+    this.savedData = savedData;
   }
 
   /*metods*/
-  setDefaultPage(page: string, dataName: string, path: string): void {
-    let json = getData(path, dataName); //get data
+  setDefaultPage(
+    page: string,
+    dataName: string,
+    path: string,
+    savedData: Array<object>
+  ): void {
+    let saveData = checkSavedData(savedData, dataName);
+    let json: object;
+    let obj: object = {};
+    let arrobj = obj as savData;
+    let svData = saveData as savData;
+
+    if (!saveData) {
+      json = getData(path, dataName);
+
+      arrobj.dataName = dataName;
+      arrobj.data = json;
+      this.savedData.push(arrobj);
+    } else {
+      json = svData;
+    }
+
     if (page != "" && json) {
       this.page = page;
       this.data = json;
@@ -77,6 +105,32 @@ function getData(patch: string, file: string): object {
     let data = xhr.responseText;
     let jsondata: object = JSON.parse(data);
     return jsondata;
+  }
+}
+
+function checkSavedData(
+  savedData: Array<Object>,
+  curDataName: string
+): object | false {
+  let data: object | false = false;
+  savedData.forEach(obj => {
+    let item = obj as savData;
+
+    if (item) {
+      let itemName = item.dataName;
+      let itemData = item.data;
+
+      if (curDataName == itemName) {
+        data = itemData;
+        return;
+      }
+    }
+  });
+
+  if (data) {
+    return data;
+  } else {
+    return false;
   }
 }
 

@@ -16,6 +16,9 @@ interface disData {
 //
 class Dispatcher {
   private store: any;
+  private defPage: boolean = false;
+  private pageTitle: boolean = false;
+  private newPage: boolean = false;
 
   //Вызываю коллбэк из Store
   dispatch(arr: Array<Object>): void {
@@ -43,21 +46,37 @@ class Dispatcher {
           el,
           true,
           dataFunc,
-          dataActive
+          dataActive,
+          []
         );
-        this.store.setDefaultPage(pageName, dataName, dataPath);
+        this.store.setDefaultPage(
+          pageName,
+          dataName,
+          dataPath,
+          this.store.savedData
+        );
+        this.defPage = true;
       }
 
       if (this.store) {
         this.store.update = false; //set default
         if (action === "setPageTitle") {
-          if (this.store.title != title) this.store.setPageTitle(el, title);
+          if (this.store.title != title) {
+            this.store.setPageTitle(el, title);
+            this.pageTitle = true;
+          }
         }
 
         if (action === "setNewPage") {
           if (this.store.page != pageName) {
-            this.store.setDefaultPage(pageName, dataName, dataPath);
+            this.store.setDefaultPage(
+              pageName,
+              dataName,
+              dataPath,
+              this.store.savedData
+            );
             this.store.dataFunc = dataFunc;
+            this.newPage = true;
           }
         }
 
@@ -73,12 +92,22 @@ class Dispatcher {
   //Беру данные из store и обновляю
   register(): void {
     if (this.store && this.store.update) {
-      //обновление title
-      changePageTitle(this.store.titleEl, this.store.title);
+      if (this.defPage || this.newPage) {
+        //обновление title
+        changePageTitle(this.store.titleEl, this.store.title);
 
-      //запуск кастомной функции для Store date
-      if (this.store.dataFunc)
-        changePageContent(this.store.data, this.store.dataFunc);
+        //запуск кастомной функции для Store date
+        if (this.store.dataFunc)
+          changePageContent(this.store.data, this.store.dataFunc);
+      }
+
+      if (this.pageTitle) {
+        changePageTitle(this.store.titleEl, this.store.title);
+      }
+
+      this.defPage = false;
+      this.pageTitle = false;
+      this.newPage = false;
     }
   }
 
@@ -102,3 +131,5 @@ function changePageTitle(el: string, title: string): void {
 function changePageContent(data: any, fun: Function) {
   fun(data);
 }
+
+const dataDispatcher = new Dispatcher();

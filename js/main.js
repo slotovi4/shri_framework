@@ -1,7 +1,15 @@
-//получаю состояние от Dispatcher
 class Store {
   /* store data */
-  constructor(page, data, title, titleEl, update, dataFunc, activeEl) {
+  constructor(
+    page,
+    data,
+    title,
+    titleEl,
+    update,
+    dataFunc,
+    activeEl,
+    savedData
+  ) {
     this.page = page;
     this.data = data;
     this.title = title;
@@ -9,10 +17,23 @@ class Store {
     this.update = update;
     this.dataFunc = dataFunc;
     this.activeEl = activeEl;
+    this.savedData = savedData;
   }
   /*metods*/
-  setDefaultPage(page, dataName, path) {
-    let json = getData(path, dataName); //get data
+  setDefaultPage(page, dataName, path, savedData) {
+    let saveData = checkSavedData(savedData, dataName);
+    let json;
+    let obj = {};
+    let arrobj = obj;
+    let svData = saveData;
+    if (!saveData) {
+      json = getData(path, dataName);
+      arrobj.dataName = dataName;
+      arrobj.data = json;
+      this.savedData.push(arrobj);
+    } else {
+      json = svData;
+    }
     if (page != "" && json) {
       this.page = page;
       this.data = json;
@@ -57,8 +78,33 @@ function getData(patch, file) {
     return jsondata;
   }
 }
+function checkSavedData(savedData, curDataName) {
+  let data = false;
+  savedData.forEach(obj => {
+    let item = obj;
+    if (item) {
+      let itemName = item.dataName;
+      let itemData = item.data;
+      if (curDataName == itemName) {
+        data = itemData;
+        return;
+      }
+    }
+  });
+  if (data) {
+    return data;
+  } else {
+    return false;
+  }
+}
+
 //
 class Dispatcher {
+  constructor() {
+    this.defPage = false;
+    this.pageTitle = false;
+    this.newPage = false;
+  }
   //Вызываю коллбэк из Store
   dispatch(arr) {
     arr.forEach(obj => {
@@ -83,19 +129,35 @@ class Dispatcher {
           el,
           true,
           dataFunc,
-          dataActive
+          dataActive,
+          []
         );
-        this.store.setDefaultPage(pageName, dataName, dataPath);
+        this.store.setDefaultPage(
+          pageName,
+          dataName,
+          dataPath,
+          this.store.savedData
+        );
+        this.defPage = true;
       }
       if (this.store) {
         this.store.update = false; //set default
         if (action === "setPageTitle") {
-          if (this.store.title != title) this.store.setPageTitle(el, title);
+          if (this.store.title != title) {
+            this.store.setPageTitle(el, title);
+            this.pageTitle = true;
+          }
         }
         if (action === "setNewPage") {
           if (this.store.page != pageName) {
-            this.store.setDefaultPage(pageName, dataName, dataPath);
+            this.store.setDefaultPage(
+              pageName,
+              dataName,
+              dataPath,
+              this.store.savedData
+            );
             this.store.dataFunc = dataFunc;
+            this.newPage = true;
           }
         }
         if (action === "itemStatus") {
@@ -108,11 +170,19 @@ class Dispatcher {
   //Беру данные из store и обновляю
   register() {
     if (this.store && this.store.update) {
-      //обновление title
-      changePageTitle(this.store.titleEl, this.store.title);
-      //запуск кастомной функции для Store date
-      if (this.store.dataFunc)
-        changePageContent(this.store.data, this.store.dataFunc);
+      if (this.defPage || this.newPage) {
+        //обновление title
+        changePageTitle(this.store.titleEl, this.store.title);
+        //запуск кастомной функции для Store date
+        if (this.store.dataFunc)
+          changePageContent(this.store.data, this.store.dataFunc);
+      }
+      if (this.pageTitle) {
+        changePageTitle(this.store.titleEl, this.store.title);
+      }
+      this.defPage = false;
+      this.pageTitle = false;
+      this.newPage = false;
     }
   }
   //Metods
@@ -132,3 +202,4 @@ function changePageTitle(el, title) {
 function changePageContent(data, fun) {
   fun(data);
 }
+const dataDispatcher = new Dispatcher();
