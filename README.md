@@ -1,15 +1,15 @@
 <b>Фреймворк на Flux-подходе.</b><br>
 <br>
-<b><u>Описание:</u></b><br>
+<ins>Описание:</ins><br>
 TS Фреймфорка находиться в папке components.<br>
 Файл для подключения main.min.js, находиться в папке js.<br>
 <br>
-Dispatcher по умолчанию: dataDispatcher<br>
-Объявление нового Dispatcher: let custDis = new Dispatcher();<br>
-Создание Action: dataDispatcher.dispatch([{Action}]);<br>
-Несколько Action: dataDispatcher.dispatch([{Action},{Action},...]);<br>
+Dispatcher по умолчанию: <i>dataDispatcher</i><br>
+Объявление нового Dispatcher: <i>let custDis = new Dispatcher();</i><br>
+Создание Action: <i>dataDispatcher.dispatch([{Action}]);</i><br>
+Несколько Action: <i>dataDispatcher.dispatch([{Action},{Action},...]);</i><br>
 <br>
-<b><u>Структура Action:</u></b><br>
+<ins>Структура Action:</ins><br>
 
 <pre>
 {
@@ -18,14 +18,14 @@ Dispatcher по умолчанию: dataDispatcher<br>
 }
 </pre>
 <br>
-<b><u>Список Action:</u></b><br>
+<ins>Список Action:</ins><br>
 <br>
 <b>setDefaultPage</b><br>
 Устанавливает начальную страницу, создает Store, принимает параметры:<br>
-<i>pageName: string   - название страницы</i><br>
-<i>dataName: string   - json данные страницы(название файла)</i><br>
-<i>dataPath: string   - дирректория расположения данных(путь к файлу)</i><br>
-<i>dataFunc: function - функция обрабатывающая данные(false dafault)</i><br>
+<i>pageName: string</i>   - название страницы<br>
+<i>dataName: string</i>   - json данные страницы(название файла)<br>
+<i>dataPath: string</i>   - дирректория расположения данных(путь к файлу)<br>
+<i>dataFunc: function</i> - функция обрабатывающая данные(false dafault)<br>
 <br>
 Пример:<br>
 <pre>
@@ -42,8 +42,8 @@ dataDispatcher.dispatch([{
 <br>
 <b>setPageTitle</b><br>
 Меняет заголовок страницы, принимает параметры:<br>
-<i>el: string    - класс заголовка/заголовков</i><br>
-<i>title: string - текст заголовка</i><br>
+<i>el: string</i>    - класс заголовка/заголовков<br>
+<i>title: string</i> - текст заголовка<br>
 <br>
 Пример:<br>
 <pre>
@@ -61,8 +61,8 @@ dataDispatcher.dispatch([{
 <br>
 <b>itemStatus</b><br>
 Отслеживает активные элементы, принимает параметры:<br>
-<i>dataActive: Array<HTMLElement> - массив отслеживаемых элементов</i><br>
-<i>activeClass: string            - класс идентификатор активного элемента(название класса без .)</i><br>
+<i>dataActive: Array<HTMLElement></i> - массив отслеживаемых элементов<br>
+<i>activeClass: string</i>            - класс идентификатор активного элемента(название класса без .)<br>
 Пример:<br>
 <pre>
 const buttons = document.querySelectorAll('.st-button');
@@ -75,18 +75,18 @@ dataDispatcher.dispatch([{
 }]);
 </pre>
 <br>
-<ins>Metods:<ins><br>
+<ins>Metods:</ins><br>
 <br>
-getCurrentPage<br>
+<b>getCurrentPage</b><br>
 Возвращает название текущей страницы<br>
-<i>Пример:</i><br>
+Пример:<br>
 <pre>
 dataDispatcher.getCurrentPage();
 </pre>
 <br>
-getActiveItems<br>
+<b>getActiveItems</b><br>
 Возвражает активные элементы<br>
-<i>Пример:</i><br>
+Пример:<br>
 <pre>
 dataDispatcher.getActiveItems();
 </pre>
