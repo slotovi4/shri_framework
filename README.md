@@ -67,6 +67,7 @@ dataDispatcher.dispatch([{
 Отслеживает активные элементы, принимает параметры:<br>
 <i>dataActive: Array[HTMLElement]</i> - массив отслеживаемых элементов<br>
 <i>activeClass: string</i>            - класс идентификатор активного элемента(название класса без .)<br>
+<br>
 Пример:<br>
 <pre>
 const buttons = document.querySelectorAll('.st-button');
@@ -83,6 +84,7 @@ dataDispatcher.dispatch([{
 <br>
 <b>getCurrentPage</b><br>
 Возвращает название текущей страницы(return string)<br>
+<br>
 Пример:<br>
 <pre>
 console.log(dataDispatcher.getCurrentPage());
@@ -90,6 +92,7 @@ console.log(dataDispatcher.getCurrentPage());
 <br>
 <b>getActiveItems</b><br>
 Возвражает активные элементы(return Array[HTMLElement])<br>
+<br>
 Пример:<br>
 <pre>
 console.log(dataDispatcher.getActiveItems());
