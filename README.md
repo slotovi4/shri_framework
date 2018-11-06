@@ -9,7 +9,7 @@ Dispatcher по умолчанию: <i>dataDispatcher</i><br>
 Создание Action: <i>dataDispatcher.dispatch([{Action}]);</i><br>
 Несколько Action: <i>dataDispatcher.dispatch([{Action},{Action},...]);</i><br>
 <br>
-<big><ins>Структура Action:</ins></big><br>
+<ins>Структура Action:</ins><br>
 
 <pre>
 {
@@ -78,15 +78,15 @@ dataDispatcher.dispatch([{
 <ins>Metods:</ins><br>
 <br>
 <b>getCurrentPage</b><br>
-Возвращает название текущей страницы<br>
+Возвращает название текущей страницы(string)<br>
 Пример:<br>
 <pre>
-dataDispatcher.getCurrentPage();
+console.log(dataDispatcher.getCurrentPage());
 </pre>
 <br>
 <b>getActiveItems</b><br>
-Возвражает активные элементы<br>
+Возвражает активные элементы(Array<HTMLElement>)<br>
 Пример:<br>
 <pre>
-dataDispatcher.getActiveItems();
+console.log(dataDispatcher.getActiveItems());
 </pre>
