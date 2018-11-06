@@ -4,8 +4,7 @@
 TS Фреймфорка находиться в папке components.<br>
 Файл для подключения main.min.js, находиться в папке js.<br>
 Подключил фреймворк на проект(<b>GH-PAGES</b>): https://slotovi4.github.io/shri_1/dist/<br>
-С помощью фреймворка реализовал смену страниц по клику меню(смена заголовка страницы и контента в низу страницы index.html) и<br>
-отслеживание открытого видео(в файле openVideo.ts, путь -> js/video-monitoring-scripts/).<br>
+С помощью фреймворка реализовал смену страниц по клику меню(смена заголовка страницы и контента в низу страницы index.html) и отслеживание открытого видео(в файле openVideo.ts, путь -> js/video-monitoring-scripts/).<br>
 Репозиторий проекта с подключенным фреймом: https://github.com/slotovi4/shri_1/tree/gh-pages<br>
 PR проекта: https://github.com/slotovi4/shri_1/pull/6<br>
 <br>
@@ -23,7 +22,7 @@ Dispatcher по умолчанию: <i>dataDispatcher</i><br>
 }
 </pre>
 <br>
-<ins>Список Action:</ins><br>
+<ins>Список Actions:</ins><br>
 <br>
 <b>setDefaultPage</b><br>
 Устанавливает начальную страницу, создает Store, принимает параметры:<br>
@@ -62,11 +61,11 @@ dataDispatcher.dispatch([{
 </pre>
 <br>
 <b>setNewPage</b><br>
-Устанавливает новую страницу, принимает параметры setDefaultPage<br>
+Устанавливает новую страницу, принимает параметры такие же как setDefaultPage<br>
 <br>
 <b>itemStatus</b><br>
 Отслеживает активные элементы, принимает параметры:<br>
-<i>dataActive: Array<HTMLElement></i> - массив отслеживаемых элементов<br>
+<i>dataActive: Array[HTMLElement]</i> - массив отслеживаемых элементов<br>
 <i>activeClass: string</i>            - класс идентификатор активного элемента(название класса без .)<br>
 Пример:<br>
 <pre>
@@ -83,14 +82,14 @@ dataDispatcher.dispatch([{
 <ins>Metods:</ins><br>
 <br>
 <b>getCurrentPage</b><br>
-Возвращает название текущей страницы(string)<br>
+Возвращает название текущей страницы(return string)<br>
 Пример:<br>
 <pre>
 console.log(dataDispatcher.getCurrentPage());
 </pre>
 <br>
 <b>getActiveItems</b><br>
-Возвражает активные элементы(Array<HTMLElement>)<br>
+Возвражает активные элементы(return Array[HTMLElement])<br>
 Пример:<br>
 <pre>
 console.log(dataDispatcher.getActiveItems());
