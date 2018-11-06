@@ -20,12 +20,12 @@ Dispatcher по умолчанию: dataDispatcher<br>
 <br>
 <b><u>Список Action:</u></b><br>
 <br>
-<b style="color:red;">setDefaultPage</b><br>
+<b>setDefaultPage</b><br>
 Устанавливает начальную страницу, создает Store, принимает параметры:<br>
-<p style="color:green;">pageName: string   - название страницы</p><br>
-<p style="color:green;">dataName: string   - json данные страницы(название файла)</p><br>
-<p style="color:green;">dataPath: string   - дирректория расположения данных(путь к файлу)</p><br>
-<p style="color:green;">dataFunc: function - функция обрабатывающая данные(false dafault)</p><br>
+pageName: string   - название страницы<br>
+dataName: string   - json данные страницы(название файла)<br>
+dataPath: string   - дирректория расположения данных(путь к файлу)<br>
+dataFunc: function - функция обрабатывающая данные(false dafault)<br>
 <br>
 <i>Пример:</i><br>
 <pre>
@@ -40,10 +40,10 @@ dataDispatcher.dispatch([{
 }]);
 </pre>
 <br>
-<b style="color:red;">setPageTitle</b><br>
+<b>setPageTitle</b><br>
 Меняет заголовок страницы, принимает параметры:<br>
-<p style="color:green;">el: string    - класс заголовка/заголовков</p><br>
-<p style="color:green;">title: string - текст заголовка</p><br>
+el: string    - класс заголовка/заголовков<br>
+title: string - текст заголовка<br>
 <br>
 <i>Пример:</i><br>
 <pre>
@@ -56,13 +56,13 @@ dataDispatcher.dispatch([{
 }]);
 </pre>
 <br>
-<b style="color:red;">setNewPage</b><br>
+<b>setNewPage</b><br>
 Устанавливает новую страницу, принимает параметры setDefaultPage<br>
 <br>
-<b style="color:red;">itemStatus</b><br>
+<b>itemStatus</b><br>
 Отслеживает активные элементы, принимает параметры:<br>
-<p style="color:green;">dataActive: Array<HTMLElement> - массив отслеживаемых элементов</p><br>
-<p style="color:green;">activeClass: string            - класс идентификатор активного элемента(название класса без .)</p><br>
+dataActive: Array<HTMLElement> - массив отслеживаемых элементов<br>
+activeClass: string            - класс идентификатор активного элемента(название класса без .)<br>
 <i>Пример:</i><br>
 <pre>
 const buttons = document.querySelectorAll('.st-button');
@@ -77,14 +77,14 @@ dataDispatcher.dispatch([{
 <br>
 <b><u>Metods:</u></b><br>
 <br>
-<p style="color:blue;">getCurrentPage</p><br>
+getCurrentPage<br>
 Возвращает название текущей страницы<br>
 <i>Пример:</i><br>
 <pre>
 dataDispatcher.getCurrentPage();
 </pre>
 <br>
-<p style="color:blue;">getActiveItems</p><br>
+getActiveItems<br>
 Возвражает активные элементы<br>
 <i>Пример:</i><br>
 <pre>
