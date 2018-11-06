@@ -7,6 +7,7 @@ TS Фреймфорка находиться в папке components.<br>
 С помощью фреймворка реализовал смену страниц по клику меню(смена заголовка страницы и контента в низу страницы index.html) и<br>
 отслеживание открытого видео(в файле openVideo.ts, путь -> js/video-monitoring-scripts/).<br>
 Репозиторий проекта с подключенным фреймом: https://github.com/slotovi4/shri_1/tree/gh-pages<br>
+PR проекта: https://github.com/slotovi4/shri_1/pull/6<br>
 <br>
 Dispatcher по умолчанию: <i>dataDispatcher</i><br>
 Объявление нового Dispatcher: <i>let custDis = new Dispatcher();</i><br>
