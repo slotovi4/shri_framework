@@ -22,12 +22,12 @@ Dispatcher по умолчанию: dataDispatcher<br>
 <br>
 <b>setDefaultPage</b><br>
 Устанавливает начальную страницу, создает Store, принимает параметры:<br>
-pageName: string   - название страницы<br>
-dataName: string   - json данные страницы(название файла)<br>
-dataPath: string   - дирректория расположения данных(путь к файлу)<br>
-dataFunc: function - функция обрабатывающая данные(false dafault)<br>
+<i>pageName: string   - название страницы</i><br>
+<i>dataName: string   - json данные страницы(название файла)</i><br>
+<i>dataPath: string   - дирректория расположения данных(путь к файлу)</i><br>
+<i>dataFunc: function - функция обрабатывающая данные(false dafault)</i><br>
 <br>
-<i>Пример:</i><br>
+Пример:<br>
 <pre>
 dataDispatcher.dispatch([{
     actionType: "setDefaultPage",
@@ -42,10 +42,10 @@ dataDispatcher.dispatch([{
 <br>
 <b>setPageTitle</b><br>
 Меняет заголовок страницы, принимает параметры:<br>
-el: string    - класс заголовка/заголовков<br>
-title: string - текст заголовка<br>
+<i>el: string    - класс заголовка/заголовков</i><br>
+<i>title: string - текст заголовка</i><br>
 <br>
-<i>Пример:</i><br>
+Пример:<br>
 <pre>
 dataDispatcher.dispatch([{
     actionType: "setPageTitle",
@@ -61,9 +61,9 @@ dataDispatcher.dispatch([{
 <br>
 <b>itemStatus</b><br>
 Отслеживает активные элементы, принимает параметры:<br>
-dataActive: Array<HTMLElement> - массив отслеживаемых элементов<br>
-activeClass: string            - класс идентификатор активного элемента(название класса без .)<br>
-<i>Пример:</i><br>
+<i>dataActive: Array<HTMLElement> - массив отслеживаемых элементов</i><br>
+<i>activeClass: string            - класс идентификатор активного элемента(название класса без .)</i><br>
+Пример:<br>
 <pre>
 const buttons = document.querySelectorAll('.st-button');
 dataDispatcher.dispatch([{
@@ -75,7 +75,7 @@ dataDispatcher.dispatch([{
 }]);
 </pre>
 <br>
-<b><u>Metods:</u></b><br>
+<ins>Metods:<ins><br>
 <br>
 getCurrentPage<br>
 Возвращает название текущей страницы<br>
